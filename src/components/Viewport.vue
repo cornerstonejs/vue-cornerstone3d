@@ -105,10 +105,10 @@ const setup = async () => {
   // Get Cornerstone imageIds and fetch metadata into RAM
   const imageIds = await createImageIdsAndCacheMetaData({
     StudyInstanceUID:
-      "1.3.6.1.4.1.14519.5.2.1.7009.2403.334240657131972136850343327463",
+      "2.16.840.1.114362.1.11972228.22789312658.616067305.306.2",
     SeriesInstanceUID:
-      "1.3.6.1.4.1.14519.5.2.1.7009.2403.226151125820845824875394858561",
-    wadoRsRoot: "https://d3t6nz73ql33tx.cloudfront.net/dicomweb",
+      "2.16.840.1.114362.1.11972228.22789312658.616067305.306.3",
+    wadoRsRoot: "https://d14fa38qiwhyfd.cloudfront.net/dicomweb",
   })
 
   // Instantiate a rendering engine
