@@ -1,12 +1,8 @@
 https://stackblitz.com/~/github.com/cornerstonejs/vue-cornerstone3d
 
-
-
-
-
 # vue-cornerstone3d
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 + Vite + Cornerstone3D. This template helps you develop with Vue 3 and run the viewer at the site root or under a subpath (e.g. `/subpath/`).
 
 ## Recommended IDE Setup
 
@@ -23,17 +19,23 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 ## Project Setup
 
 ```sh
+npm install
+# or
 yarn
 ```
 
-### Compile and Hot-Reload for Development
+## Build and run
 
-```sh
-yarn dev
-```
+### Main path (app at `/`)
 
-### Type-Check, Compile and Minify for Production
+- **Dev:** `npm run dev` → open http://localhost:5173/
+- **Build:** `npm run build` → output in `dist/`
+- **Preview:** `npm run preview` → open http://localhost:4173/
 
-```sh
-yarn build
-```
+### Subpath (app at `/subpath/`)
+
+- **Dev:** `npm run dev:subpath` → open http://localhost:5173/subpath/
+- **Build:** `npm run build:subpath` → output in `dist/` (asset URLs use `/subpath/`)
+- **Preview:** After `npm run build:subpath`, run `npm run preview:subpath`. The built app expects to be served under `/subpath/`; for a quick local check you can use `npm run dev:subpath` instead.
+
+For production, deploy the `dist/` from `build:subpath` to a server that serves the app under `/subpath/` (e.g. nginx `location /subpath/` or a static host with base path support).
