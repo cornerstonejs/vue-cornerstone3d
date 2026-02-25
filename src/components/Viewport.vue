@@ -5,12 +5,10 @@ import {
   Enums,
   type Types,
   volumeLoader,
-  cornerstoneStreamingImageVolumeLoader,
+  init as csRenderInit,
 } from "@cornerstonejs/core"
-import { init as csRenderInit, cache } from '@cornerstonejs/core';
 import { init as csToolsInit } from '@cornerstonejs/tools';
-import { init as dicomImageLoaderInit,  } from '@cornerstonejs/dicom-image-loader';
-import wadors from '@cornerstonejs/dicom-image-loader/wadors';
+import { init as dicomImageLoaderInit, wadors } from '@cornerstonejs/dicom-image-loader';
 import { api } from 'dicomweb-client';
 
 // Add interface for function parameters
@@ -52,11 +50,14 @@ async function createImageIdsAndCacheMetaData({
     seriesInstanceUID: SeriesInstanceUID,
   }
 
-  const dicomClient: api.DICOMwebClient = 
-    client ?? 
-    new api.DICOMwebClient({ url: wadoRsRoot, singlepart: true });
-    
-  const instances = await dicomClient.retrieveSeriesMetadata(studySearchOptions);
+  const dicomClient: api.DICOMwebClient =
+    client ??
+    new api.DICOMwebClient({ url: wadoRsRoot, singlepart: true })
+
+  // dicomweb-client 0.11 types require 'request'; runtime accepts it optional
+  const instances = await dicomClient.retrieveSeriesMetadata(
+    studySearchOptions as Parameters<api.DICOMwebClient["retrieveSeriesMetadata"]>[0]
+  );
   const imageIds = instances.map((instanceMetaData: any) => {
     const seriesUID = instanceMetaData[SERIES_INSTANCE_UID]?.Value?.[0]
     if (!seriesUID) {
@@ -98,9 +99,9 @@ const setup = async () => {
     return
   }
   running.value = true
-  await csRenderInit()
-  await csToolsInit()
-  dicomImageLoaderInit({ maxWebWorkers: 1})
+  csRenderInit()
+  csToolsInit()
+  dicomImageLoaderInit({ maxWebWorkers: 1 })
 
   // Get Cornerstone imageIds and fetch metadata into RAM
   const imageIds = await createImageIdsAndCacheMetaData({

@@ -31,7 +31,11 @@ import { viteCommonjs } from "@originjs/vite-plugin-commonjs"
  * }
  * ```
  */
+// Serve at root (/) or under a subpath (e.g. /subpath/). Set BASE_PATH when running scripts.
+const base = process.env.BASE_PATH ?? "/"
+
 export default defineConfig({
+  base,
   plugins: [
     vue(),
     vueJsx(),
